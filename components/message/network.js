@@ -26,7 +26,9 @@ router.post('/', function (req, res) {
 //3. EXPRESS 2021, no es necesario referenciar ya a router de express
 router.get('/', function(req, res){
     
-    controller.getMessages()
+    const filterUser = req.query.user||null
+
+    controller.getMessages(filterUser)
     .then((listMessages)=>{
         response.success(req, res, listMessages, 200)
     })

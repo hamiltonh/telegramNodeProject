@@ -18,18 +18,22 @@ function addMessage(message) {
     myMessage.save()
 }
 
-async function getMessages(){
+async function getMessages(filterUser){
     // return list
-    const messages = await Model.find()
+    let filter = {}
+    if(filterUser){
+        filter = {user:filterUser}
+    }
+    const messages = await Model.find(filter)
     return messages
 }
 
 async function updateMessage(id, message){
 
-    const messageUpdated = await Model.findByIdAndUpdate(
-        {_id:id},
-        {message},
-        {new:true}
+    const messageUpdated = await Model.findOneAndUpdate(
+        {_id:id}, //filter
+        {message}, //new data
+        { returnOriginal: false}
     )
     
     return messageUpdated
