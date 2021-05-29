@@ -1,7 +1,6 @@
 const express = require('express')
 const response = require('../../network/response')
 const controller = require('./controller')
-
 const router = express.Router()
 
 //1.RUTA SOLO CON EXPRESS, SIN USAR ROUTER**
@@ -60,6 +59,21 @@ router.post('/', function(req, res){
     // } else{
     //     response.success(req, res, 'Hola utilizando el POST con router!!', 200)
     // }
+})
+
+router.patch('/:id', function (req, res){
+    // console.log(req.params)
+    // console.log(req.query)
+
+    controller.updateMessage(req.params.id, req.body.message)
+    .then((data)=>{
+        response.success(req, res, data, 200)
+    })
+    .catch(e=>{
+        response.error(req, res, 'Error interno', 500, 'Detalles del error, para registrar en el LOG: '+e)
+    })
+
+    // res.send('ok')
 })
 
 //POST with async
