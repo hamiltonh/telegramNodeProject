@@ -3,6 +3,12 @@ const response = require('../../network/response')
 const controller = require('./controller')
 const router = express.Router()
 
+const multer = require('multer') //TX de archivos
+const middlewareUpload = multer({
+    dest: 'public/files'
+})
+
+
 //1.RUTA SOLO CON EXPRESS, SIN USAR ROUTER**
 // Responde a todos los verbos, get, put, delete
 // app.use('/', function(req, res){
@@ -47,10 +53,10 @@ router.get('/', function(req, res){
 
 })
 
-router.post('/', function(req, res){
-
+router.post('/', middlewareUpload.single('file'), function(req, res){
+// console.log(req)
     // res.send('Hola utilizando el POST con router!')
-    controller.addMessage(req.body.chat, req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file)
     .then((fullMessage)=>{
         response.success(req, res, fullMessage, 201)
     }).catch((e)=>{

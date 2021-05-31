@@ -1,6 +1,7 @@
 const store = require('./store')
+const {socket} = require('../../socket')
 
-function addMessage (chat, user, message){
+function addMessage (chat, user, message, file){
     
     return new Promise ((resolve, reject)=>{
         
@@ -8,14 +9,22 @@ function addMessage (chat, user, message){
             console.error('[messageController] Error con el usuario o mensaje.');
             reject('Los datos son incorrectos!')
         }
+        // console.log((file.originalname))
+        let fileUrl = ''
+        if(file){
+            fileUrl = 'http://localhost:3000/app/files/'+file.filename
+        }
+
         const fullMessage = {
             chat: chat,
             user: user,
             message: message,
             date: new Date(),
+            file: fileUrl,
         }
         // console.log(fullMessage)
         store.add(fullMessage)
+        socket.io.emit('message', fullMessage)
         resolve(fullMessage)
     })
 

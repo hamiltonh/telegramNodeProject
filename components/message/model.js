@@ -15,7 +15,8 @@ const schemaMessage = new Schema ({
         type: String,
         required: true,
     },
-    date: Date
+    date: Date,
+    file: String,
 })
 
 // module.exports = mongoose.model('message',schemaMessage)
