@@ -26,9 +26,9 @@ router.post('/', function (req, res) {
 //3. EXPRESS 2021, no es necesario referenciar ya a router de express
 router.get('/', function(req, res){
     
-    const filterUser = req.query.user||null
+    const filterMessage = req.query.chat||null
 
-    controller.getMessages(filterUser)
+    controller.getMessages(filterMessage)
     .then((listMessages)=>{
         response.success(req, res, listMessages, 200)
     })
@@ -50,7 +50,7 @@ router.get('/', function(req, res){
 router.post('/', function(req, res){
 
     // res.send('Hola utilizando el POST con router!')
-    controller.addMessage(req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
     .then((fullMessage)=>{
         response.success(req, res, fullMessage, 201)
     }).catch((e)=>{
@@ -90,11 +90,15 @@ router.patch('/:id', function (req, res){
 
 // })
 
-router.delete('/', function(req, res){
+router.delete('/:idMessage', function(req, res){
 
-    console.log(req.body); //Pruebas usando postman, por medio de raw/json ó urlenconded/
-    console.log(req.query); //Enviado como variables POST en la urL
-    res.send('Hola utilizando el DELETE con router!')
+    controller.deleteMessage(req.params.idMessage)
+    .then(() =>{
+        response.success(req, res,`Usuario eliminado, id: ${req.params.idMessage}` , 200)
+    })
+    .catch(e=>{
+        response.error(req, res, 'Error de indentificador!', 400, 'Detalles para registrar en el LOG interno: '+e)
+    })
     
 });
 

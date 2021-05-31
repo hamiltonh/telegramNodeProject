@@ -1,7 +1,12 @@
+// Ref: https://github.com/CodingCarlos/backend-node-platzi
 const express = require('express')
+const db = require('./db')
 const router = require('./network/routes')
 var app = express()
+require('dotenv').config()
 
+const URI = process.env.URI_DB
+db(URI)
 
 //Ejemplos de usar json or urlenconded
 app.use(express.json()); //modulo de BODY-PARSER ya viene incluido en express

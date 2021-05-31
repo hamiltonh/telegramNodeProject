@@ -2,11 +2,19 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const schemaMessage = new Schema ({
-    user: {
-        type: String,
-        require: true
+    chat: {
+        type: Schema.ObjectId,
+        ref:'chat',
     },
-    message: String,
+    user: {
+        type: Schema.ObjectId,
+        // required: true,
+        ref:'user',
+    },
+    message: {
+        type: String,
+        required: true,
+    },
     date: Date
 })
 

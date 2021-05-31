@@ -1,14 +1,15 @@
 const store = require('./store')
 
-function addMessage (user, message){
+function addMessage (chat, user, message){
     
     return new Promise ((resolve, reject)=>{
         
-        if(!user || !message){
+        if(!chat || !user || !message){
             console.error('[messageController] Error con el usuario o mensaje.');
             reject('Los datos son incorrectos!')
         }
         const fullMessage = {
+            chat: chat,
             user: user,
             message: message,
             date: new Date(),
@@ -20,10 +21,10 @@ function addMessage (user, message){
 
 }
 
-function getMessages(filterUser){
-    return new Promise((resolve, reject)=>{
-        resolve(store.list(filterUser))
-    })
+function getMessages(filterChat){
+     return new Promise((resolve, reject)=>{
+       return resolve(store.list(filterChat))
+     })
 }
 
 const updateMessage = (id, message) =>{
@@ -38,9 +39,17 @@ const updateMessage = (id, message) =>{
 
 }
 
+const deleteMessage= (idMessage) => {
+    if(!idMessage){
+        return new Promise.reject('Error parametros de entrada.')
+    }
+    return store.del(idMessage)
+}
+
 
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }
