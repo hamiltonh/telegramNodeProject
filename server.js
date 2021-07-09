@@ -28,8 +28,34 @@ router(app)
 //Ruta estatica, abrirlo desde http://localhost:3000/app/
 app.use('/app',express.static('public'))
 
+// app.use('/js',express.static('public/js'))// add para solucionar error
+// app.use('/css',express.static('public/css'))// add para solucionar error
+
+
+
 // app.listen(3000)
 // for socketio
-server.listen(3000, function (){
-    console.log('Escuchando en puerto 3000!')
+server.listen(process.env.PORT_DEV, function (){
+    console.log('Escuchando en puerto:', process.env.PORT_DEV)
 })
+
+
+
+
+/*
+Leyendo los comentarios y resumiendo la información faltante:
+
+Descargar la carpeta que está en Archivos y enlaces
+Descomprimir
+Por consola entrar a esa carpeta
+ejecutar:
+npm install
+npm run serve
+npm run serve --fix
+npm run build
+Debería crear una carpeta dist, entrar y copiar los archivos
+Pegarlos en la carpeta public de nuestro proyecto
+Listo!
+nodemon server
+
+*/

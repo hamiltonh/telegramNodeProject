@@ -3,15 +3,22 @@ const objMensaje = {
     body: ''
 }
 
-exports.success = function (req, res, mensaje, status ) {
-    objMensaje.error = ''
-    objMensaje.body = mensaje
-    res.status(status||200).send (objMensaje)
+const statusMessages = {
+    '200': 'Done',
+    '201': 'Created',
+    '400': 'Invalid format',
+    '500': 'Internal error',
 }
 
-exports.error = function (req, res, mensaje, status, details) {
+exports.success = function (req, res, mensaje, status=200 ) {
+    objMensaje.error = ''
+    objMensaje.body = message || statusMessages[status]
+    res.status(status).send (objMensaje)
+}
+
+exports.error = function (req, res, mensaje, status=500, details) {
     console.error('ERROR_DETAILS:',details)
-    objMensaje.error = mensaje
+    objMensaje.error = message || statusMessages[status]
     objMensaje.body = ''
-    res.status(status||500).send (objMensaje)
+    res.status(status).send (objMensaje)
 }
